@@ -34,7 +34,15 @@ mongoose.connect("mongodb://127.0.0.1/news", {useNewUrlParser: true});
            });
            res.send("Scrape Complete");
         });
+    });
 
+    app.get("/articles", function(req, res) {
+        db.Article.remove({});
+        db.Article.find({}).then(function(dbArticle) {
+            res.json(dbArticle);
+        }).catch(function(err) {
+            res.json(err);
+        });
     });
 
 app.listen(PORT, function() {
