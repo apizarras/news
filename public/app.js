@@ -1,9 +1,19 @@
 //ajax calls and dynamic html
-$.getJSON("/articles", function(data) {
-    console.log("jquery display articles: ", data)
-    for(i=0;i<data.length; i++) {
-        $("#articles").append("<p data-id='" + data[i]._id + "'>" + data[i].title + "<br />" + data[i].link + "<br />" + data[i].summary + "</p>")
-    }
+function displayArticles(data) {
+    $.getJSON("/articles", function(data) {
+        console.log("display articles: ", data)
+        for(i=0;i<data.length; i++) {
+            $("#articles").append("<p data-id='" + data[i]._id + "'>" + data[i].title + "<br />" + data[i].link + "<br />" + data[i].summary + "</p>")
+        }
+    });
+};
+
+
+$("#scrape").on("click", function() {
+    $("#articles").empty();
+    $.getJSON("/scrape", function(data) {
+        displayArticles(data);
+    });
 });
 
 $(document).on("click", "p", function() {
@@ -27,4 +37,21 @@ $(document).on("click", "p", function() {
         }
     });
 });
+
+$(document).on("click", "#save-note", function() {
+    let dataId = $(this).attr("data-id");
+
+    $.ajax({
+        method: "POST",
+        url: "/articles/" + dataId,
+        data: {
+            title: $("#titleinput").val(),
+            body: $("#bodyinput").val()
+        }
+    }).then(function(data) {
+        console.log(data);
+    });
+    $("#titleinput").val("");
+    $("#bodyinput").val("");
+})
 
