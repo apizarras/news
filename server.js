@@ -46,7 +46,7 @@ mongoose.connect("mongodb://127.0.0.1/news", {useNewUrlParser: true});
     });
 
 app.get("/articles/:id", function(req,res) {
-    db.Article.findOne({id: req.params.id}).populate("note")
+    db.Article.findOne({_id: req.params.id}).populate("note")
     .then(function(dbArticle) {res.json(dbArticle)})
     .catch(function(err) {
         res.json(err);

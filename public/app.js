@@ -9,15 +9,22 @@ $.getJSON("/articles", function(data) {
 $(document).on("click", "p", function() {
     $("#notes").empty();
     let dataId = $(this).attr("data-id");
-
+    console.log("this is dataID: ", dataId)
     $.ajax({
         method: "GET",
         url: "/articles/" + dataId
     }).then(function(data) {
-        $("#notes").append("<div class='card'>" + "<div class='card-header'>" + data.title + "</div>");
-        $("#notes").append("<div class='card-body'>" + "<h5 class='card-title'>Sample Title</h5>");
-        $("#notes").append("<p class='card-text'>Your Notes About Article Go Here</p>");
-        $("#notes").append("<button id='save-note'>Save Note</button>")
+        console.log('this the data: ', data);
+        $("#notes").append("<div class='card'>");
+        $("#notes").append("<div class='card-body'>" + "<h5 class='card-title'>" + data.title + "</h5>");
+        $("#notes").append("<input id='titleinput'")
+        $("#notes").append("<textarea id='bodyinput' class='card-text'></textarea>");
+        $("#notes").append("<button data-id='" + data._id + "id='save-note'>Save Note</button>");
+
+        if(data.note) {
+            $("#titleinput").val(data.note.title);
+            $("#bodyinput").val(data.note.body);
+        }
     });
 });
 
