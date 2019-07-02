@@ -6,3 +6,18 @@ $.getJSON("/articles", function(data) {
     }
 });
 
+$(document).on("click", "p", function() {
+    $("#notes").empty();
+    let dataId = $(this).attr("data-id");
+
+    $.ajax({
+        method: "GET",
+        url: "/articles/" + dataId
+    }).then(function(data) {
+        $("#notes").append("<div class='card'>" + "<div class='card-header'>" + data.title + "</div>");
+        $("#notes").append("<div class='card-body'>" + "<h5 class='card-title'>Sample Title</h5>");
+        $("#notes").append("<p class='card-text'>Your Notes About Article Go Here</p>");
+        $("#notes").append("<button id='save-note'>Save Note</button>")
+    });
+});
+
