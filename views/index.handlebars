@@ -51,6 +51,13 @@
           <div class="row">
               <div id="articles"></div>
               <div id="notes"></div>
+              <div id="existing-notes">
+                <ul>
+                  {{#each notes}}
+                    <p>{{title}} {{body}}</p>
+                  {{/each}}
+                </ul>
+              </div>
         </div>
       </section>
     

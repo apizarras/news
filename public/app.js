@@ -26,7 +26,7 @@ $(document).on("click", "p", function() {
     }).then(function(data) {
         console.log('this the data: ', data);
         $("#notes").append("<form><div class='form-group'>");
-        $("#notes").append("<h5 class='card-title' id='titleinput'>" + data.title + "</h5>");
+        $("#notes").append("<h5 class='card-title'>" + data.title + "</h5>");
         $("#notes").append("<label for='formGroupExampleInput'>Give Your Note a Title</label>");
         $("#notes").append("<input type='text' class='form-control' id='titleinput' placeholder='Note Title'></div>");
         $("#notes").append("<div class='form-group'>")
@@ -39,6 +39,7 @@ $(document).on("click", "p", function() {
         if(data.note) {
             $("#titleinput").val(data.note.title);
             $("#bodyinput").val(data.note.body);
+            res.render({notes: data});
         }
     });
 });
