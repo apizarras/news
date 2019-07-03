@@ -11,9 +11,7 @@ function displayArticles(data) {
 
 $("#scrape").on("click", function() {
     $("#articles").empty();
-    $.getJSON("/scrape", function(data) {
-        displayArticles(data);
-    });
+    displayArticles();
 });
 
 $(document).on("click", "p", function() {
