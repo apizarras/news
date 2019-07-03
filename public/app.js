@@ -24,17 +24,20 @@ $(document).on("click", "p", function() {
     }).then(function(data) {
         console.log('this the data: ', data);
         $("#notes").append("<div class='card'>");
-        $("#notes").append("<div class='card-body'>" + "<h5 class='card-title'>" + data.title + "</h5>");
-        $("#notes").append("<input id='titleinput'")
+        $("#notes").append("<h5 class='card-title' id='titleinput'>" + data.title + "</h5>");
+        $("#notes").append("<input id='title></input'>");
         $("#notes").append("<textarea id='bodyinput' class='card-text'></textarea>");
-        $("#notes").append("<button data-id='" + data._id + "id='save-note'>Save Note</button>");
-
+        $("#notes").append("<button data-id='" + data._id + "' id='save-note'>Save Note</button>");
+        console.log('this is note', note);
         if(data.note) {
             $("#titleinput").val(data.note.title);
             $("#bodyinput").val(data.note.body);
         }
     });
 });
+// displayNotes((notes) => {
+
+// })
 
 $(document).on("click", "#save-note", function() {
     let dataId = $(this).attr("data-id");
@@ -51,5 +54,6 @@ $(document).on("click", "#save-note", function() {
     });
     $("#titleinput").val("");
     $("#bodyinput").val("");
+
 })
 

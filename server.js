@@ -2,9 +2,9 @@ const express = require("express");
 const axios = require("axios");
 const mongoose = require("mongoose");
 const morgan = require("morgan");
-const exhbrs = require("express-handlebars");
+const exphbs  = require("express-handlebars");
 const db = require("./models");
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 const cheerio = require("cheerio");
 
 const app = express();
@@ -14,7 +14,17 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 app.use(express.static("public"));
 
+const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/xxxfillinxxx";
+// mongoose.connect(MONGODB_URI);
+
+app.engine("handlebars", exphbs({defaultLayout: "main"}));
+app.set("view engine", "handlebars");
+
 mongoose.connect("mongodb://127.0.0.1/news", {useNewUrlParser: true});
+
+    app.get("/", (req, res)=> {
+        res.render("index", {});
+    });
 
     app.get("/scrape", function(req,res) {
         axios.get("https://www.nytimes.com").then(function(response) {
