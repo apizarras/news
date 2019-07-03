@@ -1,9 +1,11 @@
 //ajax calls and dynamic html
+
 function displayArticles(data) {
     $.getJSON("/articles", function(data) {
         console.log("display articles: ", data)
         for(i=0;i<data.length; i++) {
-            $("#articles").append("<p data-id='" + data[i]._id + "'>" + data[i].title + "<br />" + data[i].link + "<br />" + data[i].summary + "</p>")
+            $("#articles").append(
+                "<h3 data-id='" + data[i]._id + "'>" + data[i].title + "</h3>" + "<br />" + "<a href='data[i].link'>" + data[i].link + "</a>" + "<br />" + "<p data-id='" + data[i]._id + "'>" + data[i].summary + "</p>")
         }
     });
 };
@@ -23,11 +25,16 @@ $(document).on("click", "p", function() {
         url: "/articles/" + dataId
     }).then(function(data) {
         console.log('this the data: ', data);
-        $("#notes").append("<div class='card'>");
+        $("#notes").append("<form><div class='form-group'>");
         $("#notes").append("<h5 class='card-title' id='titleinput'>" + data.title + "</h5>");
-        $("#notes").append("<input id='title></input'>");
-        $("#notes").append("<textarea id='bodyinput' class='card-text'></textarea>");
+        $("#notes").append("<label for='formGroupExampleInput'>Give Your Note a Title</label>");
+        $("#notes").append("<input type='text' class='form-control' id='titleinput' placeholder='Note Title'></div>");
+        $("#notes").append("<div class='form-group'>")
+        $("#notes").append("<label for='formGroupExampleInput2'>Your Notes:</label>");
+        $("#notes").append("<textarea id='bodyinput' class='form-control' id='formGroupExampleInput2' placeholder='Notes Go Here'></textarea>");
         $("#notes").append("<button data-id='" + data._id + "' id='save-note'>Save Note</button>");
+        $("#notes").append("</div></form>");
+
         console.log('this is note', note);
         if(data.note) {
             $("#titleinput").val(data.note.title);
@@ -35,9 +42,6 @@ $(document).on("click", "p", function() {
         }
     });
 });
-// displayNotes((notes) => {
-
-// })
 
 $(document).on("click", "#save-note", function() {
     let dataId = $(this).attr("data-id");

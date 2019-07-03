@@ -14,7 +14,7 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 app.use(express.static("public"));
 
-const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/xxxfillinxxx";
+// const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/xxxfillinxxx";
 // mongoose.connect(MONGODB_URI);
 
 app.engine("handlebars", exphbs({defaultLayout: "main"}));
@@ -55,23 +55,24 @@ mongoose.connect("mongodb://127.0.0.1/news", {useNewUrlParser: true});
         });
     });
 
-app.get("/articles/:id", function(req,res) {
-    db.Article.findOne({_id: req.params.id}).populate("note")
-    .then(function(dbArticle) {res.json(dbArticle)})
-    .catch(function(err) {
-        res.json(err);
+    app.get("/articles/:id", function(req,res) {
+        console.log('req.params.id ', req.params.id);
+        db.Article.findOne({_id: req.params.id}).populate("note")
+        .then(function(dbArticle) {res.json(dbArticle)})
+        .catch(function(err) {
+            res.json(err);
+        });
     });
-});
 
-app.post("/articles/:id", function(req, res) {
-    db.Note.create(req.body).then(function(dbNote) {
-        return db.Article.findOneAndUpdate({_id: req.params.id}), {note: dbNote._id}, {new: true}
-    }).then(function(dbArticle) {
-        res.json(dbArticle);
-    }).catch(function(err) {
-        res.json(err);
+    app.post("/articles/:id", function(req, res) {
+        db.Note.create(req.body).then(function(dbNote) {
+            return db.Article.findOneAndUpdate({_id: req.params.id}), {note: dbNote._id}, {new: true}
+        }).then(function(dbArticle) {
+            res.json(dbArticle);
+        }).catch(function(err) {
+            res.json(err);
+        });
     });
-});
 
 app.listen(PORT, function() {
     console.log("app running on port: ", PORT)
