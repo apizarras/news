@@ -20,7 +20,7 @@ mongoose.connect(MONGODB_URI);
 app.engine("handlebars", exphbs({defaultLayout: "main"}));
 app.set("view engine", "handlebars");
 
-mongoose.connect("mongodb://localhost/news", {useNewUrlParser: true});
+// mongoose.connect("mongodb://localhost/news", {useNewUrlParser: true});
 
     app.get("/", (req, res)=> {
         res.render("index", {});
