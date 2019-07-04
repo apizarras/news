@@ -3,10 +3,10 @@ const axios = require("axios");
 const mongoose = require("mongoose");
 const morgan = require("morgan");
 const exphbs  = require("express-handlebars");
-const db = require("./models");
-const PORT = process.env.PORT || 3000;
 const cheerio = require("cheerio");
 
+const db = require("./models");
+const PORT = process.env.PORT || 3000;
 const app = express();
 
 app.use(morgan("dev"));
